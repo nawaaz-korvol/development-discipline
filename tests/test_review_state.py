@@ -169,6 +169,31 @@ class ReviewStateTests(unittest.TestCase):
                              "import sys; sys.stdout.buffer.write(bytes.fromhex('e29c9320e28094'))"])
         self.assertEqual(result.stdout, "\u2713 \u2014")
 
+    # Batch shims would route untrusted review text through Windows command parsing.
+    def test_batch_reviewer_shims_are_refused_with_native_install_guidance(self) -> None:
+        for extension in (".cmd", ".bat"):
+            with self.subTest(extension=extension):
+                shim = self.root / f"claude{extension}"
+                shim.write_text("@echo should never execute\n")
+                with patch.dict(os.environ, {"CLAUDE_BIN": str(shim)}):
+                    with self.assertRaisesRegex(helper.ReviewError, "native.*claude.exe"):
+                        helper.claude_command(session_id="test", resume=False, prompt="Review",
+                                              model="configured-default", effort="high")
+
+    # Resolving once avoids accepting a PATH executable and then launching a different bare name.
+    def test_launch_uses_the_resolved_reviewer_executable(self) -> None:
+        with patch.dict(os.environ, {"CLAUDE_BIN": "configured-reviewer"}), \
+                patch.object(helper.shutil, "which", return_value=sys.executable):
+            command = helper.claude_command(session_id="test", resume=False, prompt="Review",
+                                            model="configured-default", effort="high")
+        self.assertEqual(command[0], sys.executable)
+
+    # A removed executable must report a bounded CLI failure instead of losing state in a traceback.
+    def test_process_start_error_is_reported_without_exposing_prompt(self) -> None:
+        with self.assertRaises(helper.ReviewError) as error:
+            helper.run([str(self.root / "does-not-exist"), "private prompt"])
+        self.assertNotIn("private prompt", str(error.exception))
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
