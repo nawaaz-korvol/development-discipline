@@ -1,0 +1,4 @@
+interface:
+  display_name: "Development Discipline"
+  short_description: "Spec, TDD, docs, gates, and Claude review per PR"
+  default_prompt: "Use $development-discipline to implement this change with tests, documentation, and independent Claude Code review."

@@ -1,0 +1,21 @@
+# Current system
+
+The repository is a Git-backed Codex marketplace containing one skills-only plugin.
+The plugin exposes the development workflow and its bundled Claude review skill.
+No MCP server, service, background automation, or account synchronization is installed.
+
+The development skill routes project settings, documentation, and verification through
+supporting references. It requires the bundled review cycle for each PR and records
+exact-commit evidence. The review helper starts/resumes/completes local task-scoped
+Claude sessions. It records HEAD but does not itself enforce exact-SHA approval;
+the skill and repository publication gates own that requirement.
+
+`pnpm check` runs Python syntax compilation, Biome, portable state-machine tests,
+and real Biome fixtures rejecting raw `Date` while allowing `@korvol/time`,
+and package integrity checks. `check:python` is syntax validation, not static type
+analysis; the package contains no TypeScript application. CI additionally
+runs the original POSIX integration tests on Linux/macOS. Live Claude reviews require
+local authentication and are not run in GitHub Actions.
+
+See [limitations](NOTES.md), [responsibilities](COMPONENT_RESPONSIBILITIES.md), and
+[release gates](ROADMAP.md) for their separate authorities.

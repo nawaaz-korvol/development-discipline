@@ -1,0 +1,21 @@
+{
+	"name": "development-discipline",
+	"version": "1.0.0",
+	"description": "Spec-first development, test-first commits, documentation, verification gates, and independent Claude Code review per PR.",
+	"author": {
+		"name": "nawaaz-korvol",
+		"url": "https://github.com/nawaaz-korvol"
+	},
+	"skills": "./skills/",
+	"repository": "https://github.com/nawaaz-korvol/development-discipline",
+	"homepage": "https://github.com/nawaaz-korvol/development-discipline#readme",
+	"interface": {
+		"displayName": "Development Discipline",
+		"shortDescription": "Spec, TDD, docs, gates, and Claude review per PR.",
+		"longDescription": "A reusable development workflow with project-adapted rules, documented decisions, exact-commit verification, and a bundled task-scoped Claude Code reviewer.",
+		"developerName": "nawaaz-korvol",
+		"category": "Productivity",
+		"capabilities": [],
+		"defaultPrompt": "Implement this change with Development Discipline and independent Claude Code review."
+	}
+}
