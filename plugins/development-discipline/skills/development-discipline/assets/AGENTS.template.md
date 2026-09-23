@@ -4,6 +4,9 @@ Adopt and fill this template deliberately; do not overwrite existing instruction
 
 - Canonical agreement: [record path]. Specification authority: [record path].
 - Worktree location and feature branch naming: [record convention]. Never edit main.
+- GPG-sign all development commits, including tests and docs. Configure signing before
+  the first commit and verify every introduced PR commit on GitHub before handoff.
+  Signing setup and required CI/repository rules: [record policy, never private keys].
 - Behavior follows aligned spec, failing test/red commit, implementation/green commit.
 - Test runner and focused command: [record command]. Tests explain protected consequences.
 - Typecheck, lint/format, full tests, acceptance gates: [record actual commands].

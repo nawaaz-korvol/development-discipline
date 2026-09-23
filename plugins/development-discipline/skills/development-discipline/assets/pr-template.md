@@ -14,6 +14,7 @@ Commands, results, environment, skipped checks, and actual evidence.
 - Reviewed code SHA and base SHA:
 - Claude rounds, material findings, and Fixed/Rejected/Unresolved dispositions:
 - Final gate SHA and remote head:
+- GitHub GPG verification: checked PR head, introduced commit count, and result:
 - Documentation-only successor delta, if permitted:
 
 ## Documentation

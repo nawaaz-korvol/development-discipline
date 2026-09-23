@@ -8,6 +8,7 @@ policy from actual enforcement; report drift with the concrete configuration evi
 |---|---|---|
 | Worktree | `worktree/<task>/` | Respect existing location/branch conventions |
 | Branch | A task-scoped feature branch | Never modify the default branch directly |
+| Signing | GPG signatures and GitHub verification for every development commit | Use the machine's own key and verified identity; follow [commit signing](commit-signing.md) |
 | Test | Vitest, `*.spec.ts` | Use the native framework for another language |
 | Typecheck | `pnpm typecheck` with strict TypeScript | Require the real project equivalent; do not label syntax checks as static typing |
 | Lint | `pnpm lint` using Biome | Preserve the configured tool outside Biome-supported languages |

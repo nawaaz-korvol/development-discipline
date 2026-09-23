@@ -5,6 +5,10 @@ Read the adopted specification in `docs/architecture/2026-09-23-initial-release.
 before changing the package. Preserve the upstream review helper's provenance.
 
 - Work in a feature worktree, never on `main`. Preserve unrelated changes.
+- GPG-sign every new development commit, including tests and documentation. Verify
+  local signatures and GitHub's Verified status for every commit introduced by a PR.
+  Read `docs/architecture/2026-09-23-verified-commits.md`; never rewrite published
+  history or move release tags to repair old signatures without an agreed migration.
 - Agree on behavioral changes before implementation. Commit failing behavioral
   tests before their fixes in separate commits. Packaging, documentation, and
   configuration do not need artificial red/green commits.

@@ -7,6 +7,40 @@ on:
 permissions:
   contents: read
 jobs:
+  verified-commits:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+    steps:
+      - name: Verify every PR commit has a valid GPG signature on GitHub
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          EXPECTED_HEAD: ${{ github.event.pull_request.head.sha }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh api "repos/$GH_REPO/pulls/$PR_NUMBER" > "$RUNNER_TEMP/signing-pr.json"
+          gh api --paginate --slurp "repos/$GH_REPO/pulls/$PR_NUMBER/commits?per_page=100" > "$RUNNER_TEMP/signing-commits.json"
+          if ! jq -e --arg head "$EXPECTED_HEAD" --slurpfile pr "$RUNNER_TEMP/signing-pr.json" '
+            add as $commits |
+            ($pr[0].head.sha == $head) and
+            ($pr[0].commits > 0) and
+            ($commits | length == $pr[0].commits) and
+            ($commits[-1].sha == $head) and
+            (all($commits[];
+              .commit.verification.verified == true and
+              .commit.verification.reason == "valid" and
+              ((.commit.verification.signature // "") | startswith("-----BEGIN PGP SIGNATURE-----"))
+            ))
+          ' "$RUNNER_TEMP/signing-commits.json"; then
+            echo '::error::Every introduced PR commit must be GPG-signed and GitHub-verified. Check key registration/email, signature status, complete commit count (API limit 250), and current PR head; rerun after correction.'
+            exit 1
+          fi
+          echo "All introduced commits are GitHub-verified GPG signatures at $EXPECTED_HEAD."
   package:
     strategy:
       matrix:
