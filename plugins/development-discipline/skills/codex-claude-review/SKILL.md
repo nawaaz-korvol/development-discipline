@@ -45,6 +45,10 @@ Windows ACL guarantees. Installing this skill on another machine does not migrat
 Claude sessions. This bundle's enclosing development skill requires a final clean,
 committed-code review for each PR; the helper itself also supports interim dirty trees.
 
+Use native `claude.exe` on Windows, or set `CLAUDE_BIN` to that executable. Windows
+`.cmd`/`.bat` shims are refused with an actionable error rather than sending review
+text through a command shell. The helper resolves the executable before launching it.
+
 For another review round or another review unit that directly contributes to the same task contract, write a progress update containing finding dispositions, changes made, new tests, and any scope clarification, then run:
 
 ```bash

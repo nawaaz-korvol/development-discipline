@@ -18,6 +18,8 @@ Future changes must retain this attribution and record their scope.
 
 Test fixtures clear inherited Git hook variables before creating repositories. The
 live fixture invokes Python directly for Windows support and decodes UTF-8 output.
+The helper resolves the reviewer executable, refuses Windows batch shims, and reports
+launch failures without including review prompts in its error message.
 
 No open-source license has been selected for this repository or its imported material.
 Public visibility is not a representation of an MIT, Apache, or other license grant.

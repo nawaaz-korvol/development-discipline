@@ -37,7 +37,9 @@ sync, cloud execution, or OpenAI public-directory publication.
   permissions (live compatibility is checked with 2.1.233). Standalone print mode has
   no permission host and denies requests that would prompt.
 - On Windows, Claude Code's Git Bash prerequisite. Invoke the Python entrypoint with
-  `python .../scripts/run_claude_review.py`; POSIX can use the `.sh` wrapper with `python3`.
+  `python .../scripts/run_claude_review.py` and use native `claude.exe` (or set `CLAUDE_BIN`
+  to it). npm `.cmd`/`.bat` launchers are refused to avoid shell interpretation of review
+  text. POSIX can use the `.sh` wrapper with `python3`.
 - Repository-specific build/test dependencies. This package does not install or sign
   into Claude, create a background reviewer, or grant GitHub merge authority.
 
@@ -52,9 +54,11 @@ permissions, review controls, and exact-SHA enforcement boundaries.
 
 ## Update or roll back
 
-Re-register the same repository at the desired published tag, then reinstall the plugin:
+Remove the registered marketplace source, add it at the desired published tag, then
+reinstall the plugin. Codex refuses to change an existing source's ref through `add` alone:
 
 ```sh
+codex plugin marketplace remove development-discipline
 codex plugin marketplace add nawaaz-korvol/development-discipline --ref v1.0.0
 codex plugin add development-discipline@development-discipline
 ```

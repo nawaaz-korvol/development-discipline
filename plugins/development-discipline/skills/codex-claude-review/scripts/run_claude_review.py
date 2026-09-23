@@ -28,7 +28,11 @@ def utc_now() -> str:
 
 
 def run(command: list[str], *, cwd: Path | None = None, check: bool = True) -> subprocess.CompletedProcess[str]:
-    result = subprocess.run(command, cwd=cwd, text=True, encoding="utf-8", capture_output=True)
+    try:
+        result = subprocess.run(command, cwd=cwd, text=True, encoding="utf-8", capture_output=True)
+    except OSError as error:
+        # The command can contain private review text; report only the executable name.
+        raise ReviewError(f"could not launch {Path(command[0]).name}: {error.strerror}") from error
     if check and result.returncode != 0:
         detail = result.stderr.strip() or result.stdout.strip() or f"exit code {result.returncode}"
         raise ReviewError(f"command failed: {' '.join(command)}\n{detail}")
@@ -231,10 +235,18 @@ def continuation_prompt(
 
 def claude_command(*, session_id: str, resume: bool, prompt: str, model: str, effort: str) -> list[str]:
     claude_binary = os.environ.get("CLAUDE_BIN", "claude")
-    if shutil.which(claude_binary) is None and not Path(claude_binary).is_file():
+    resolved_binary = shutil.which(claude_binary)
+    if resolved_binary is None and Path(claude_binary).is_file():
+        resolved_binary = str(Path(claude_binary).resolve())
+    if resolved_binary is None:
         raise ReviewError("Claude Code CLI is required but was not found")
+    if Path(resolved_binary).suffix.lower() in {".cmd", ".bat"}:
+        raise ReviewError(
+            "Windows batch launchers are not supported; install native Claude Code (claude.exe) "
+            "or set CLAUDE_BIN to its native executable"
+        )
     command = [
-        claude_binary,
+        resolved_binary,
         "--print",
         "--safe-mode",
         "--no-chrome",

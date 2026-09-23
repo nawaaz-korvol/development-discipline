@@ -9,7 +9,7 @@
 		"lint:fix": "biome check --write .",
 		"format": "biome format --write .",
 		"test": "python -m unittest discover -s tests -v",
-		"check:python": "python -m compileall -q scripts tests plugins/development-discipline/skills/codex-claude-review/scripts",
+		"check:python": "python -m compileall -q scripts tests plugins/development-discipline/skills/codex-claude-review/scripts plugins/development-discipline/skills/codex-claude-review/tests",
 		"check": "pnpm check:python && pnpm lint && pnpm test && python scripts/validate_package.py"
 	},
 	"devDependencies": {

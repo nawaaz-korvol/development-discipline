@@ -12,7 +12,7 @@ that verifies the caller's HEAD, configuration, and working tree remain unchange
 
 ## Verified
 
-- `pnpm check`: Python syntax, Biome, seven portable behavioral tests, and package
+- `pnpm check`: Python syntax, Biome, thirteen portable behavioral tests, and package
   identity/reference integrity passed on Windows.
 - Official Skill Creator validators accepted both skills; Plugin Creator validator
   accepted the manifest. The POSIX launcher passed `bash -n`.
@@ -20,4 +20,9 @@ that verifies the caller's HEAD, configuration, and working tree remain unchange
   skills at plugin version 1.0.0.
 - Biome rejected both `Date.now()` and `new Date()` and accepted `@korvol/time` usage.
 - The published `@korvol/time@0.1.1` README and metadata confirmed the documented API.
-- Hosted CI, independent review, and release evidence are tracked in the PR and roadmap.
+- Live authenticated Claude fixture passed: seeded defect detection, same-session repair
+  review, and a second review unit in the same session.
+- Linux, macOS, and Windows CI passed on the first reviewed code snapshot; final-SHA
+  results and review disposition are tracked in the PR and roadmap.
+- GitHub-source installation and remove/re-add at another pinned ref passed in an
+  isolated Codex profile.

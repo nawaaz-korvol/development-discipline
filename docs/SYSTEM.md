@@ -10,6 +10,10 @@ exact-commit evidence. The review helper starts/resumes/completes local task-sco
 Claude sessions. It records HEAD but does not itself enforce exact-SHA approval;
 the skill and repository publication gates own that requirement.
 
+The helper supports native Windows Claude launchers, resolves the executable once,
+rejects batch shims, and preserves Unicode output. Standalone print mode with no
+permission host keeps prompted requests denied without depending on a newer CLI flag.
+
 `pnpm check` runs Python syntax compilation, Biome, portable state-machine tests,
 and real Biome fixtures rejecting raw `Date` while allowing `@korvol/time`,
 and package integrity checks. `check:python` is syntax validation, not static type
