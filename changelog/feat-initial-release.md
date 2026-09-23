@@ -5,6 +5,8 @@
 Package the agreed development discipline and existing task-scoped Claude review
 workflow as one Codex plugin. Add repository marketplace discovery, project adoption
 templates, versioned distribution instructions, and portable package validation.
+Repair the live-discovered Claude 2.1.233 invocation incompatibility and preserve
+Unicode reviewer output on Windows, with separate red/green commits.
 
 ## Verified
 

@@ -33,8 +33,9 @@ sync, cloud execution, or OpenAI public-directory publication.
 ## Reviewer prerequisites
 
 - Git and Python 3.10+.
-- A locally installed, authenticated Claude Code CLI supporting the bundled flags
-  (`--safe-mode`, plan permissions, and noninteractive permission prompts).
+- A locally installed, authenticated Claude Code CLI supporting safe mode and plan
+  permissions (live compatibility is checked with 2.1.233). Standalone print mode has
+  no permission host and denies requests that would prompt.
 - On Windows, Claude Code's Git Bash prerequisite. Invoke the Python entrypoint with
   `python .../scripts/run_claude_review.py`; POSIX can use the `.sh` wrapper with `python3`.
 - Repository-specific build/test dependencies. This package does not install or sign

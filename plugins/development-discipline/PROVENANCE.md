@@ -10,9 +10,11 @@ No private application implementation, customer material, or account credentials
 - Commit: `7cf53f149bc186bbe6267823d1b10d296f9fbb47`
 - Source directory: `skills/codex-claude-review/`
 
-The imported helper's protocol is preserved. Packaging guidance adds the portable
-Python invocation and the enclosing skill supplies the mandatory per-PR/final-SHA
-requirements. Future changes must retain this attribution and record their scope.
+The task/session protocol is preserved. This distribution removes the 2.1.259-only
+permission-prompts flag for compatibility with 2.1.233 standalone print mode, and uses
+explicit UTF-8 subprocess/CLI output on Windows. Packaging guidance adds the portable
+Python invocation; the enclosing skill supplies mandatory per-PR/final-SHA requirements.
+Future changes must retain this attribution and record their scope.
 
 No open-source license has been selected for this repository or its imported material.
 Public visibility is not a representation of an MIT, Apache, or other license grant.

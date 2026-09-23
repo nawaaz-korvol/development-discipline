@@ -7,15 +7,16 @@ import os
 from pathlib import Path
 import re
 import subprocess
+import sys
 import tempfile
 
 
 SKILL_ROOT = Path(__file__).resolve().parents[1]
-REVIEW_SCRIPT = SKILL_ROOT / "scripts" / "run-claude-review.sh"
+REVIEW_SCRIPT = SKILL_ROOT / "scripts" / "run_claude_review.py"
 
 
 def run(command: list[str], *, cwd: Path, env: dict[str, str], check: bool = True) -> subprocess.CompletedProcess[str]:
-    result = subprocess.run(command, cwd=cwd, env=env, text=True, capture_output=True)
+    result = subprocess.run(command, cwd=cwd, env=env, text=True, encoding="utf-8", capture_output=True)
     if check and result.returncode != 0:
         raise RuntimeError(f"command failed: {command}\nstdout:\n{result.stdout}\nstderr:\n{result.stderr}")
     return result
@@ -57,12 +58,12 @@ def main() -> int:
         original_status = run(["git", "status", "--porcelain"], cwd=repo, env=env).stdout
         started = run(
             [
-                str(REVIEW_SCRIPT),
+                sys.executable, str(REVIEW_SCRIPT),
                 "start",
                 "--task-title",
                 "Live reviewer session test",
                 "--objective",
-                "Implement a correct addition helper",
+                "Implement correct calculator and formatting helpers",
                 "--completion",
                 "Claude reports the defect, the defect is fixed, and the resumed review is clean",
                 "--unit",
@@ -94,7 +95,7 @@ def main() -> int:
         fixed_status = run(["git", "status", "--porcelain"], cwd=repo, env=env).stdout
         resumed = run(
             [
-                str(REVIEW_SCRIPT),
+                sys.executable, str(REVIEW_SCRIPT),
                 "resume",
                 "--task-id",
                 start_meta["TASK_ID"],
@@ -138,7 +139,7 @@ def main() -> int:
         commits_before_second_unit = run(["git", "log", "--format=%H"], cwd=repo, env=env).stdout.splitlines()
         second_unit = run(
             [
-                str(REVIEW_SCRIPT),
+                sys.executable, str(REVIEW_SCRIPT),
                 "resume",
                 "--task-id",
                 start_meta["TASK_ID"],

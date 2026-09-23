@@ -28,7 +28,7 @@ def utc_now() -> str:
 
 
 def run(command: list[str], *, cwd: Path | None = None, check: bool = True) -> subprocess.CompletedProcess[str]:
-    result = subprocess.run(command, cwd=cwd, text=True, capture_output=True)
+    result = subprocess.run(command, cwd=cwd, text=True, encoding="utf-8", capture_output=True)
     if check and result.returncode != 0:
         detail = result.stderr.strip() or result.stdout.strip() or f"exit code {result.returncode}"
         raise ReviewError(f"command failed: {' '.join(command)}\n{detail}")
@@ -240,8 +240,8 @@ def claude_command(*, session_id: str, resume: bool, prompt: str, model: str, ef
         "--no-chrome",
         "--permission-mode",
         "plan",
-        "--permission-prompts",
-        "none",
+        # Standalone --print has no permission host: prompted actions are denied.
+        # --permission-prompts requires 2.1.259 and prevents older CLIs from starting.
         "--tools",
         "Read,Grep,Glob,Bash",
         "--effort",
@@ -441,6 +441,9 @@ def parser() -> argparse.ArgumentParser:
 
 
 def main() -> int:
+    # Pipe output must not depend on the Windows ANSI codepage; reviews contain Unicode.
+    sys.stdout.reconfigure(encoding="utf-8")
+    sys.stderr.reconfigure(encoding="utf-8")
     try:
         args = parser().parse_args()
         return int(args.handler(args))
