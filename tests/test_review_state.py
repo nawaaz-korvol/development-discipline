@@ -144,9 +144,24 @@ class ReviewStateTests(unittest.TestCase):
         self.assertIn("--safe-mode", command)
         self.assertIn("--no-chrome", command)
         self.assertEqual(command[command.index("--permission-mode") + 1], "plan")
-        self.assertEqual(command[command.index("--permission-prompts") + 1], "none")
+        self.assertNotIn("--permission-prompt-tool", command)
         self.assertEqual(command[command.index("--tools") + 1], "Read,Grep,Glob,Bash")
         self.assertNotIn("--dangerously-skip-permissions", command)
+
+    # Installed Claude 2.1.233 rejects a newer flag before any review can start.
+    def test_standalone_print_supports_pre_2_1_259_cli(self) -> None:
+        command = helper.claude_command(session_id="test-session", resume=False, prompt="Review",
+                                        model="configured-default", effort="high")
+        self.assertNotIn("--permission-prompts", command)
+        self.assertIn("--print", command)
+        self.assertIn("--safe-mode", command)
+        self.assertNotIn("--permission-prompt-tool", command)
+
+    # UTF-8 reviewer output must survive Windows codepages without corruption or lost results.
+    def test_unicode_subprocess_output_is_preserved(self) -> None:
+        result = helper.run([sys.executable, "-c",
+                             "import sys; sys.stdout.buffer.write(bytes.fromhex('e29c9320e28094'))"])
+        self.assertEqual(result.stdout, "\u2713 \u2014")
 
 
 if __name__ == "__main__":

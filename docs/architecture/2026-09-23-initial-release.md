@@ -43,6 +43,18 @@ The user specified `@korvol/time` on npm for the TypeScript time discipline. Its
 0.1.1 API and runtime requirements were checked. Include a Biome Date-ban fragment and
 consumer guidance; no local Integra time-package exception is needed in consumers.
 
+### Compatibility finding and bounded repair
+
+Live invocation on Claude Code 2.1.233 rejected `--permission-prompts none` before
+review began. Anthropic documents that flag as requiring 2.1.259. Standalone print
+mode with no permission host already denies requests that would prompt. Remove the
+unsupported flag while retaining safe mode, plan permissions, no Chrome, and the
+read-oriented tool set; do not add a permission host or bypass controls. Also explicitly
+decode subprocess output and emit CLI output as UTF-8 on Windows. Confirm red tests
+before the fix, preserve separate commits, and exercise real start/resume behavior.
+
+Source: https://code.claude.com/docs/en/headless#turn-off-permission-prompts-in-unattended-runs
+
 ## Verification and limits
 
 Validate both skills and the plugin with the official local validators. Run package
