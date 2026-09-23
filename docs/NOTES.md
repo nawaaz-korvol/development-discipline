@@ -10,3 +10,4 @@
 | D1 | Deferred | Public OpenAI directory submission and workspace publishing are separate distribution channels, not part of v1. |
 | D2 | Deferred | No open-source license has been selected; do not claim an MIT or Apache grant. |
 | D3 | Deferred | No signed gate receipt or custom automated merge coordinator is supplied. Repositories must retain their existing publication controls. |
+| R1 | Resolved | Git-hook environment selectors previously escaped into disposable test fixtures. Fixtures now clear inherited Git variables; a host-repository regression proves the calling checkout remains unchanged. |

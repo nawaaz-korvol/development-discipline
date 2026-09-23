@@ -7,6 +7,8 @@ workflow as one Codex plugin. Add repository marketplace discovery, project adop
 templates, versioned distribution instructions, and portable package validation.
 Repair the live-discovered Claude 2.1.233 invocation incompatibility and preserve
 Unicode reviewer output on Windows, with separate red/green commits.
+Isolate test fixture repositories from inherited Git hook selectors, with a regression
+that verifies the caller's HEAD, configuration, and working tree remain unchanged.
 
 ## Verified
 

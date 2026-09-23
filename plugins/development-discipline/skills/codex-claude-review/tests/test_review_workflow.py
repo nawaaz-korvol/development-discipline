@@ -12,6 +12,7 @@ import sys
 import tempfile
 import textwrap
 import unittest
+from unittest.mock import patch
 
 
 SKILL_ROOT = Path(__file__).resolve().parents[1]
@@ -31,6 +32,11 @@ def metadata(stderr: str) -> dict[str, str]:
 
 class ReviewWorkflowTest(unittest.TestCase):
     def setUp(self) -> None:
+        git_environment = patch.dict(os.environ, {
+            key: value for key, value in os.environ.items() if not key.startswith("GIT_")
+        }, clear=True)
+        git_environment.start()
+        self.addCleanup(git_environment.stop)
         self.temporary = tempfile.TemporaryDirectory(prefix="codex-claude-review-test-")
         self.root = Path(self.temporary.name)
         self.repo = self.root / "repo"

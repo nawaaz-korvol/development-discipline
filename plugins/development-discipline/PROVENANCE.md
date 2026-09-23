@@ -16,5 +16,8 @@ explicit UTF-8 subprocess/CLI output on Windows. Packaging guidance adds the por
 Python invocation; the enclosing skill supplies mandatory per-PR/final-SHA requirements.
 Future changes must retain this attribution and record their scope.
 
+Test fixtures clear inherited Git hook variables before creating repositories. The
+live fixture invokes Python directly for Windows support and decodes UTF-8 output.
+
 No open-source license has been selected for this repository or its imported material.
 Public visibility is not a representation of an MIT, Apache, or other license grant.

@@ -31,7 +31,7 @@ def main() -> int:
         root = Path(temporary)
         repo = root / "repo"
         repo.mkdir()
-        env = os.environ.copy()
+        env = {key: value for key, value in os.environ.items() if not key.startswith("GIT_")}
         env.update(
             {
                 "CLAUDE_REVIEW_EFFORT": "low",

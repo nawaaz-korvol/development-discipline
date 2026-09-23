@@ -32,6 +32,12 @@ class ReviewStateTests(unittest.TestCase):
     """Lost session identity or a reset round budget would invalidate independent review."""
 
     def setUp(self) -> None:
+        # Hooks export selectors for their own repository; fixtures must not inherit them.
+        git_environment = patch.dict(os.environ, {
+            key: value for key, value in os.environ.items() if not key.startswith("GIT_")
+        }, clear=True)
+        git_environment.start()
+        self.addCleanup(git_environment.stop)
         self.temporary = tempfile.TemporaryDirectory(prefix="discipline-review-")
         self.addCleanup(self.temporary.cleanup)
         self.root = Path(self.temporary.name)
