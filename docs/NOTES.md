@@ -7,6 +7,8 @@
 | L3 | Known | Reviewer state and Claude sessions are local; installing the plugin elsewhere does not migrate them. POSIX mode 0600 does not establish Windows ACL guarantees; use a private user-profile directory. |
 | L4 | Known | The imported helper includes Bash under Claude plan-mode controls; this is not an OS sandbox. Review only trusted worktrees, never weaken the controls, and verify unchanged code/HEAD after review. |
 | L5 | Known | The helper records the starting HEAD but accepts dirty trees and does not parse approval. Final clean-commit review is a workflow requirement, not a helper guarantee. |
+| L6 | Known | PR #1 has eight unsigned development commits. Its merge and initial commits are verified. The follow-up enforces verification of newly introduced PR commits; it cannot retroactively sign published history without changing SHAs. v1.0.0 remains unchanged. |
+| L7 | Known | The verification CI job reports failures but is not itself branch protection. Required-signature/required-status settings are not configured by this PR. The GitHub PR commit endpoint caps results at 250; the job rejects incomplete lists. |
 | D1 | Deferred | Public OpenAI directory submission and workspace publishing are separate distribution channels, not part of v1. |
 | D2 | Deferred | No open-source license has been selected; do not claim an MIT or Apache grant. |
 | D3 | Deferred | No signed gate receipt or custom automated merge coordinator is supplied. Repositories must retain their existing publication controls. |

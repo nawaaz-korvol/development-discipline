@@ -30,6 +30,8 @@ For behavioral specs, assess failure handling and operator visibility using
 
 1. Work on a feature branch in an isolated worktree, never edit or commit on the default
    branch. Use the project's location/naming convention. Preserve dirty or active worktrees.
+   Before the first commit, configure GPG signing using [commit signing](references/commit-signing.md).
+   Sign every development commit, including red/green tests and documentation evidence.
 2. For runtime behavior, write a failing behavior test, run it to confirm the intended
    failure, and commit the red phase. Implement the behavior, run the tests, and commit
    green separately. Preserve both commits. If the order was missed, restore it within
@@ -96,7 +98,9 @@ is unavailable, report the missing prerequisite and keep the review incomplete.
 
 Run the required final gates on the exact final SHA. For authorized repository changes,
 commit/push and open one focused PR ready for review using the project's gate command and
-template. Include Summary, Details, Testing, changelog, review findings/dispositions, exact
+template. Verify GitHub marks every commit introduced by the PR as verified, following
+[commit signing](references/commit-signing.md); local signing alone is insufficient.
+Include Summary, Details, Testing, changelog, review findings/dispositions, exact
 SHAs, checks, and limitations. Do not use a draft as the completed handoff or leave PR
 creation to another person. Existing project conventions may allow an earlier draft.
 

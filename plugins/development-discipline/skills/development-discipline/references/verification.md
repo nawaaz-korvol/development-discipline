@@ -45,6 +45,8 @@ Keep Summary, Details, and Testing; remove genuine non-applicable sections and e
 omitted required checks. Record risk/rollback when relevant, the documentation updates,
 Claude findings/dispositions, reviewed code SHA, final gate SHA, and remote head.
 
-Preserve separate red/green commits and use merge commits. Signing is a project setting:
-preserve required signatures, but do not invent signing credentials or claim unsigned
-commits are verified. GitHub's merge-commit identity is expected.
+Preserve separate red/green commits and use merge commits. Every development commit
+must be GPG-signed and GitHub-verified; follow [commit signing](commit-signing.md) before
+the first commit and verify the complete PR commit list before handoff. Include the
+checked head, commit count, and verification result. GitHub's merge-commit identity
+is expected, but its signature does not verify unsigned commits inside the PR.

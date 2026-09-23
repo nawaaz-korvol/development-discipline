@@ -21,5 +21,11 @@ analysis; the package contains no TypeScript application. CI additionally
 runs the original POSIX integration tests on Linux/macOS. Live Claude reviews require
 local authentication and are not run in GitHub Actions.
 
+Every new development commit is GPG-signed. The PR-only `verified-commits` CI job
+requires GitHub-valid OpenPGP signatures for the complete introduced commit list
+at the event head; API failures, incomplete evidence, or unverified commits fail.
+It does not scan preexisting base history or configure branch protection. See the
+[signing specification](architecture/2026-09-23-verified-commits.md).
+
 See [limitations](NOTES.md), [responsibilities](COMPONENT_RESPONSIBILITIES.md), and
 [release gates](ROADMAP.md) for their separate authorities.
