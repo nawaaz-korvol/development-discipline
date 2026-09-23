@@ -1,0 +1,4 @@
+interface:
+  display_name: "Codex + Claude Review"
+  short_description: "Implement with Codex, independently review with Claude"
+  default_prompt: "Use $codex-claude-review to implement this change and have Claude independently review it before handoff."

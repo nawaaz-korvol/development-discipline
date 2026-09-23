@@ -1,0 +1,12 @@
+{
+	"linter": {
+		"rules": {
+			"style": {
+				"noRestrictedGlobals": {
+					"level": "error",
+					"options": { "deniedGlobals": ["Date"] }
+				}
+			}
+		}
+	}
+}

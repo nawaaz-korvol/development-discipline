@@ -1,0 +1,20 @@
+{
+	"name": "development-discipline",
+	"interface": {
+		"displayName": "Korvol Development Discipline"
+	},
+	"plugins": [
+		{
+			"name": "development-discipline",
+			"source": {
+				"source": "local",
+				"path": "./plugins/development-discipline"
+			},
+			"policy": {
+				"installation": "AVAILABLE",
+				"authentication": "ON_INSTALL"
+			},
+			"category": "Productivity"
+		}
+	]
+}
